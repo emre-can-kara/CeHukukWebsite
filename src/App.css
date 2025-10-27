@@ -1,0 +1,674 @@
+﻿@import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #0B0C10;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* PREVENT HORIZONTAL OVERFLOW */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #0B0C10;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #0B0C10;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Only style generic links, not navbar links */
+a:not(.navbar-link) {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}   
+a:not(.navbar-link):hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  a:not(.navbar-link):hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* UNIFIED BACKGROUND COLORS */
+.practice-areas-section,
+.practice-areas-detail,
+.footer-section {
+    background-color: #0B0C10;
+}
+
+    /* FIXED Hero Section - NO MORE OVERFLOW */
+.hero {
+    width: 100%; /* Changed from 100vw */
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(11, 12, 16, 0.95) 0%, rgba(11, 12, 16, 0.98) 50%, rgba(11, 12, 16, 0.95) 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 2rem;
+    box-sizing: border-box; /* Ensure padding doesn't cause overflow */
+}
+
+.hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    opacity: 0.7;
+    filter: brightness(1.0) contrast(1.2);
+    animation: zoomInEffect 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+        
+@keyframes zoomInEffect {
+    0% {
+        transform: scale(1.15);
+        opacity: 0;
+        filter: brightness(1.0) contrast(1.2) blur(2px);
+    }
+    50% {
+        opacity: 0.4;
+        filter: brightness(1.0) contrast(1.2) blur(1px);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+        filter: brightness(1.0) contrast(1.2) blur(0);
+    }
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.15) 0%, rgba(255, 193, 7, 0.1) 30%, transparent 70%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    width: 100%;
+}
+
+.hero-title {
+    font-size: clamp(1.8rem, 4vw, 4rem);
+    font-weight: 300;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+    animation: slideInFromBottom 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.hero-cta {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white !important;
+    text-decoration: none;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    font-weight: 400;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: slideInFromBottom 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+    transition: all 0.3s ease;
+}
+
+.hero-cta:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(50px) scale(0.9);
+        opacity: 0;
+        filter: blur(3px);
+    }
+    60% {
+        transform: translateY(-5px) scale(1.02);
+        opacity: 0.8;
+        filter: blur(1px);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+.hero-dots {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    display: flex;
+    gap: 12px;
+    z-index: 2;
+}
+
+.hero-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-dot.active {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.hero-dot:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* UNIFIED BOKEH LIGHTS - CONSISTENT GOLD COLORS FOR ALL COMPONENTS */
+
+/* Hero Bokeh */
+.bokeh-lights {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.bokeh-light {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(255, 193, 7, 0.25) 50%, transparent 100%);
+    animation: unifiedFloat 8s ease-in-out infinite;
+    filter: blur(0.5px);
+}
+
+.bokeh-light:nth-child(1) {
+    width: clamp(60px, 8vw, 120px);
+    height: clamp(60px, 8vw, 120px);
+    top: 20%;
+    right: 15%;
+    animation-delay: 0s;
+}
+
+.bokeh-light:nth-child(2) {
+    width: clamp(40px, 6vw, 80px);
+    height: clamp(40px, 6vw, 80px);
+    top: 40%;
+    right: 25%;
+    animation-delay: -2s;
+}
+
+.bokeh-light:nth-child(3) {
+    width: clamp(30px, 4vw, 60px);
+    height: clamp(30px, 4vw, 60px);
+    top: 60%;
+    right: 10%;
+    animation-delay: -4s;
+}
+
+.bokeh-light:nth-child(4) {
+    width: clamp(50px, 7vw, 100px);
+    height: clamp(50px, 7vw, 100px);
+    top: 30%;
+    right: 35%;
+    animation-delay: -1s;
+}
+
+.bokeh-light:nth-child(5) {
+    width: clamp(20px, 3vw, 40px);
+    height: clamp(20px, 3vw, 40px);
+    top: 70%;
+    right: 20%;
+    animation-delay: -3s;
+}
+
+/* Practice Areas Bokeh - UNIFIED COLORS */
+.practice-areas-section,
+.practice-areas-detail {
+    position: relative;
+    overflow: hidden;
+    width: 100%; /* Ensure no overflow */
+    box-sizing: border-box;
+}
+
+.practice-areas-bokeh {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.practice-areas-bokeh-light {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(255, 193, 7, 0.25) 50%, transparent 100%);
+    animation: unifiedFloat 10s ease-in-out infinite;
+    filter: blur(0.8px);
+}
+
+.practice-areas-bokeh-light:nth-child(1) {
+    width: clamp(80px, 10vw, 140px);
+    height: clamp(80px, 10vw, 140px);
+    top: 25%;
+    left: 15%;
+    animation-delay: 1s;
+}
+
+.practice-areas-bokeh-light:nth-child(2) {
+    width: clamp(60px, 8vw, 110px);
+    height: clamp(60px, 8vw, 110px);
+    top: 15%;
+    right: 20%;
+    animation-delay: -1s;
+}
+
+.practice-areas-bokeh-light:nth-child(3) {
+    width: clamp(100px, 12vw, 170px);
+    height: clamp(100px, 12vw, 170px);
+    bottom: 30%;
+    left: 25%;
+    animation-delay: -3s;
+}
+
+.practice-areas-bokeh-light:nth-child(4) {
+    width: clamp(70px, 9vw, 120px);
+    height: clamp(70px, 9vw, 120px);
+    bottom: 20%;
+    right: 15%;
+    animation-delay: -5s;
+}
+
+.practice-areas-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        145deg, 
+        rgba(255, 215, 0, 0.02) 0%, 
+        transparent 40%, 
+        transparent 60%, 
+        rgba(255, 193, 7, 0.02) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Footer Bokeh - UNIFIED COLORS */
+.footer-section {
+    width: 100%; /* Ensure no overflow */
+    box-sizing: border-box;
+}
+
+.footer-bokeh {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.footer-bokeh-light {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(255, 193, 7, 0.25) 50%, transparent 100%);
+    animation: unifiedFloat 14s ease-in-out infinite;
+    filter: blur(1px);
+}
+
+.footer-bokeh-light:nth-child(1) {
+    width: clamp(120px, 15vw, 200px);
+    height: clamp(120px, 15vw, 200px);
+    top: 20%;
+    left: 10%;
+    animation-delay: 2s;
+}
+
+.footer-bokeh-light:nth-child(2) {
+    width: clamp(90px, 12vw, 150px);
+    height: clamp(90px, 12vw, 150px);
+    top: 60%;
+    right: 15%;
+    animation-delay: -2s;
+}
+
+.footer-bokeh-light:nth-child(3) {
+    width: clamp(140px, 16vw, 220px);
+    height: clamp(140px, 16vw, 220px);
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: -6s;
+}
+
+.footer-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg, 
+        rgba(255, 215, 0, 0.02) 0%, 
+        transparent 35%,
+        transparent 65%, 
+        rgba(255, 193, 7, 0.02) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* UNIFIED ANIMATION - Used by all bokeh effects */
+@keyframes unifiedFloat {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) scale(1);
+        opacity: 0.4;
+    }
+    25% {
+        transform: translateY(-15px) translateX(10px) scale(1.05);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-25px) translateX(-8px) scale(1.1);
+        opacity: 0.7;
+    }
+    75% {
+        transform: translateY(-10px) translateX(15px) scale(1.03);
+        opacity: 0.5;
+    }
+}
+
+/* SIMPLIFIED FOOTER STYLES */
+.footer-logo-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.footer-logo {
+    background: linear-gradient(135deg, #fff 0%, #f0f0f0 50%, #fff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    letter-spacing: 2px;
+    position: relative;
+    text-align: center;
+}
+
+.footer-logo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 215, 0, 0.1) 50%, transparent 70%);
+    animation: logoShine 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.footer-logo-line {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #FFD700 20%, #FFC107 50%, #FF9800 80%, transparent 100%);
+    margin: 0 auto;
+    border-radius: 2px;
+    animation: lineGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoShine {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+@keyframes lineGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        transform: scaleX(1);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 193, 7, 0.4);
+        transform: scaleX(1.1);
+    }
+}
+
+.footer-section-title {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 8px;
+    text-align: center;
+}
+
+.footer-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #FFD700 50%, transparent 100%);
+    border-radius: 2px;
+}
+
+.footer-link {
+    position: relative;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-link:hover {
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.footer-link::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.8) 0%, rgba(255, 193, 7, 0.6) 100%);
+    transition: width 0.3s ease;
+}
+
+.footer-link:hover::before {
+    width: 100%;
+}
+
+.footer-contact-item {
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.footer-contact-item:hover {
+    background: rgba(255, 215, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.footer-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #9CA3AF;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.footer-social-link:hover::before {
+    left: 100%;
+}
+
+.footer-social-link:hover {
+    background: rgba(255, 215, 0, 0.15);
+    color: #fff;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+/* RESPONSIVE DESIGN - FIXED OVERFLOW ISSUES */
+@media (max-width: 640px) {
+    .hero {
+        padding: 0 1rem;
+        justify-content: center;
+        text-align: center;
+        width: 100%; /* Ensure no overflow */
+    }
+    
+    .hero-content {
+        text-align: center;
+    }
+    
+    .hero-dots {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 1rem;
+    }
+    
+    .hero::before {
+        width: 100%;
+        background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.08) 0%, rgba(255, 193, 7, 0.05) 30%, transparent 70%);
+    }
+    
+    .bokeh-lights {
+        width: 100%;
+        opacity: 0.6;
+    }
+
+    .practice-areas-bokeh-light,
+    .footer-bokeh-light {
+        filter: blur(1.5px);
+        opacity: 0.4;
+    }
+    
+    .footer-logo {
+        font-size: 2.5rem !important;
+    }
+    
+    .footer-section-title {
+        font-size: 1.125rem !important;
+    }
+    
+    .footer-social-link {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 0 1.5rem;
+        width: 100%; /* Ensure no overflow */
+    }
+    
+    .hero-dots {
+        left: 1.5rem;
+    }
+    
+    .bokeh-lights {
+        width: 80%;
+    }
+
+    .practice-areas-bokeh-light,
+    .footer-bokeh-light {
+        filter: blur(1px);
+    }
+    
+    .footer-logo {
+        font-size: 3rem !important;
+    }
+}
