@@ -28,7 +28,7 @@
                     >
                         <div className="prose prose-invert max-w-none">
                             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                                İçerik yakında eklenecektir.
+                                Büromuz avukatlarından Ahmet Çavdar, temel arabuluculuk eğitimi almış Adalet Bakanlığı tarafından yapılan sınavda yüksek başarı göstererek 2019 yılında arabulucu olmaya hak kazanmıştır. Ticaret Hukuku, İş Hukuku ve Tüketici Hukuku alanlarında uzmanlık eğitimi almış olup, uzman arabulucu olarak hizmet vermektedir. Arabuluculuk Hizmetimizden Yararlanmak için Lütfen Büromuzla İletişime Geçiniz
                             </p>
                         </div>
                     </div>

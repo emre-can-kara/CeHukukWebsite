@@ -1,182 +1,211 @@
-﻿import { useState } from 'react';
+﻿import { Scale, Gavel, Building2, Users, FileText, Shield, ArrowRight, Briefcase, Home } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 
 const PracticeAreas = () => {
-    const [selectedArea, setSelectedArea] = useState(null);
+    const [visibleCards, setVisibleCards] = useState([]);
+    const [hoveredCard, setHoveredCard] = useState(null);
+    const sectionRef = useRef(null);
 
-    const practiceAreasData = [
+    const practiceAreas = [
         {
-            id: 1,
-            title: "Ticaret Hukuku",
-            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
-            description: "Şirket kuruluşu, birleşme ve devralma işlemleri konularında uzman hizmet"
+            icon: <Users size={40} />,
+            title: "Aile & Boşanma Hukuku",
+            description: "Aile hukuku ve boşanma davalarında profesyonel hukuki destek ve danışmanlık hizmetleri.",
+            shortDesc: "Aile içi uyuşmazlıklar, velayet, nafaka ve mal paylaşımı konularında uzman hukuki destek.",
+            link: "/aile-bosanma-hukuku",
+            image: "/src/assets/lawFirmHero.png",
+            color: "#5C4033"
         },
-        {
-            id: 2,
-            title: "Ceza Hukuku", 
-            image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=300&fit=crop",
-            description: "Ceza davalarında savunma ve hukuki destek hizmetleri"
-        },
-        {
-            id: 3,
-            title: "Aile Hukuku",
-            image: "https://images.unsplash.com/photo-1521791055366-0d553872125f?w=400&h=300&fit=crop",
-            description: "Boşanma, velayet ve nafaka davalarında uzman hizmet"
-        },
-        {
-            id: 4,      
+        {   
+            icon: <Briefcase size={40} />,
             title: "İş Hukuku",
-            image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop",
-            description: "İşçi ve işveren hakları, iş sözleşmeleri konularında danışmanlık"
+            description: "Kıdem tazminatı, işe iade, iş sözleşmeleri ve toplu sözleşme süreçlerinde profesyonel danışmanlık.",
+            shortDesc: "İşçi hakları, kıdem tazminatı, işe iade ve arabuluculuk süreçlerinde hukuki destek.",
+            link: "/is-hukuku",
+            image: "/src/assets/lawFirmHero2.webp",
+            color: "#7B5B3E"
         },
         {
-            id: 5,
-            title: "Gayrimenkul Hukuku",
-            image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
-            description: "Tapu işlemleri, gayrimenkul alım-satım sözleşmeleri"
+            icon: <Home size={40} />,
+            title: "Gayrimenkul ve Miras Hukuku",
+            description: "Taşınmaz hukuku, miras davaları, tapu işlemleri ve gayrimenkul sözleşmelerinde uzman hukuki hizmet.",
+            shortDesc: "Taşınmaz davaları, miras paylaşımı, tapu düzeltme ve ecrimisil davalarında danışmanlık.",
+            link: "/gayrimenkul-miras-hukuku",
+            image: "/src/assets/lawFirmHero3.webp",
+            color: "#8B6F47"
         },
         {
-            id: 6,
-            title: "Vergi Hukuku",
-            image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop",
-            description: "Vergi uyuşmazlıkları ve vergi planlaması danışmanlığı"
-        },
-        {
-            id: 7,
+            icon: <Shield size={40} />,
             title: "Sigorta Hukuku",
-            image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop",
-            description: "Sigorta talepleri ve uyuşmazlık çözümleri"
+            description: "Trafik kazaları, iş kazaları ve sigorta tazminat davalarında profesyonel hukuki destek.",
+            shortDesc: "Maddi-manevi tazminat, destekten yoksun kalma ve iş kazası davalarında uzman hizmet.",
+            link: "/sigorta-hukuku",
+            image: "/src/assets/lawFirmHero.png",
+            color: "#9B7E51"
         },
         {
-            id: 8,
-            title: "Fikri Mülkiyet",
-            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
-            description: "Patent, marka ve telif hakları korunması"
+            icon: <Gavel size={40} />,
+            title: "İcra ve İflas Hukuku",
+            description: "Alacak tahsilatı ve borçlu haklarının korunmasında uzman hukuki destek.",
+            shortDesc: "Alacak takibi, icra takipleri, haciz işlemleri ve iflas süreçlerinde profesyonel destek.",
+            link: "/icra-iflas-hukuku",
+            image: "/src/assets/lawFirmHero2.webp",
+            color: "#AB8D5A"
         },
         {
-            id: 9,
-            title: "Anayasa Hukuku",
-            image: "https://images.unsplash.com/photo-1589578662600-eaa4a5b2e3d3?w=400&h=300&fit=crop",
-            description: "Anayasal haklar ve özgürlükler alanında danışmanlık"
+            icon: <Scale size={40} />,
+            title: "Arabuluculuk",
+            description: "Uyuşmazlıkların dostane çözümü için profesyonel arabuluculuk hizmetleri.",
+            shortDesc: "Ticari ve kişisel uyuşmazlıkların dava öncesi dostane çözümü için arabuluculuk.",
+            link: "/arabuluculuk",
+            image: "/src/assets/lawFirmHero3.webp",
+            color: "#BB9D63"
+        },
+        {
+            icon: <Shield size={40} />,
+            title: "KVKK Danışmanlığı",
+            description: "Kişisel verilerin korunması ve KVKK uyum süreçlerinde danışmanlık.",
+            shortDesc: "KVKK uyum süreci, veri envanteri oluşturma ve veri güvenliği konularında danışmanlık.",
+            link: "/kvkk-danismanligi",
+            image: "/src/assets/lawFirmHero.png",
+            color: "#CB9D5A"
+        },
+        {
+            icon: <FileText size={40} />,
+            title: "Kurumsal Danışmanlık",
+            description: "Şirketlerin hukuki süreçlerinde stratejik danışmanlık ve destek hizmetleri.",
+            shortDesc: "Şirket kuruluşu, birleşme-devir, sözleşme hazırlama ve kurumsal uyum konularında danışmanlık.",
+            link: "/kurumsal-danismanlik",
+            image: "/src/assets/lawFirmHero2.webp",
+            color: "#D4AF37"
         }
     ];
 
-    const handleAreaClick = (area) => {
-        setSelectedArea(area);
-        console.log(`Navigating to ${area.title} component`);
-    };
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            console.log('🎬 Starting animation sequence...');
+            
+            for (let i = 0; i < practiceAreas.length; i++) {
+                setTimeout(() => {
+                    console.log(`✅ Card ${i} becoming visible`);
+                    setVisibleCards(prev => [...prev, i]);
+                }, i * 150);
+            }
+        }, 300);
 
-    if (selectedArea) {
-        return (
-            <section className="practice-areas-detail text-white py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col relative overflow-hidden">
-                {/* Background Linear Bokeh Effect - REDUCED */}
-                <div className="practice-areas-bokeh">
-                    <div className="practice-areas-bokeh-light"></div>
-                    <div className="practice-areas-bokeh-light"></div>
-                    <div className="practice-areas-bokeh-light"></div>
-                    <div className="practice-areas-bokeh-light"></div>
-                </div>
+        return () => clearTimeout(timer);
+    }, []);
 
-                <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col relative z-10">
-                    <button 
-                        onClick={() => setSelectedArea(null)}
-                        className="mb-6 px-4 py-2 bg-gradient-to-r from-gray-600 to-gray-800 rounded hover:from-gray-500 hover:to-gray-700 transition-all duration-300 self-start"
-                    >
-                        ← Geri Dön
-                    </button>
-                    
-                    <div className="flex-1 flex flex-col justify-center items-center text-center">
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">{selectedArea.title}</h1>
-                        <div className="w-full max-w-2xl h-48 sm:h-64 lg:h-80 rounded-lg overflow-hidden mb-6">
-                            <img 
-                                src={selectedArea.image} 
-                                alt={selectedArea.title}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                        <p className="text-base sm:text-lg text-gray-300 mb-6 max-w-2xl">{selectedArea.description}</p>
-                        <div className="p-6 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg max-w-2xl w-full">
-                            <h3 className="text-lg sm:text-xl font-semibold mb-4">Hizmet Detayları</h3>
-                            <p className="text-gray-300 text-sm sm:text-base">
-                                Bu alanda size sunduğumuz profesyonel hukuki hizmetler hakkında daha detaylı bilgi için bizimle iletişime geçin.
-                            </p>
-                        </div>
+    return (
+        <div className="practice-areas-wrapper">
+            <section 
+                id="practice-areas" 
+                className="practice-areas-section"
+                ref={sectionRef}
+            >
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    {/* Enhanced Header */}
+                    <div className="section-header">
+                        <p className="text-[#D4AF37] text-sm font-semibold tracking-[3px] uppercase mb-4">
+                            UZMANLıK ALANLARıMıZ
+                        </p>
+                        <h2 className="section-title">Çalışma Alanlarımız</h2>
+                        <div className="section-divider"></div>
+                        <p className="section-subtitle">
+                            Geniş yelpazede profesyonel hukuki danışmanlık ve avukatlık hizmetleri sunuyoruz
+                        </p>
+                    </div>
+
+                    {/* Professional Grid Layout */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {practiceAreas.map((area, index) => {
+                            const isVisible = visibleCards.includes(index);
+                            const isHovered = hoveredCard === index;
+                            
+                            return (
+                                <Link
+                                    key={index}
+                                    to={area.link}
+                                    className="practice-card-professional group"
+                                    style={{
+                                        opacity: isVisible ? 1 : 0,
+                                        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                                        transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                                        transitionDelay: `${index * 0.1}s`
+                                    }}
+                                    onMouseEnter={() => setHoveredCard(index)}
+                                    onMouseLeave={() => setHoveredCard(null)}
+                                >
+                                    {/* Card Image with Overlay */}
+                                    <div className="practice-card-image-wrapper">
+                                        <img 
+                                            src={area.image} 
+                                            alt={area.title}
+                                            className="practice-card-img"
+                                        />
+                                        <div 
+                                            className="practice-card-color-overlay"
+                                            style={{ 
+                                                background: `linear-gradient(135deg, ${area.color}dd 0%, ${area.color}99 100%)`
+                                            }}
+                                        ></div>
+                                        
+                                        {/* Icon Badge */}
+                                        <div className="practice-card-icon-badge">
+                                            <div className="text-white">
+                                                {area.icon}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Card Content */}
+                                    <div className="practice-card-body">
+                                        <h3 className="practice-card-title">
+                                            {area.title}
+                                        </h3>
+                                        
+                                        <p className="practice-card-description">
+                                            {isHovered ? area.description : area.shortDesc}
+                                        </p>
+
+                                        {/* Call to Action */}
+                                        <div className="practice-card-cta">
+                                            <span className="practice-card-cta-text">Detaylı Bilgi</span>
+                                            <ArrowRight 
+                                                size={20} 
+                                                className="practice-card-cta-icon"
+                                            />
+                                        </div>
+
+                                        {/* Decorative Line */}
+                                        <div 
+                                            className="practice-card-accent-line"
+                                            style={{ backgroundColor: area.color }}
+                                        ></div>
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+
+                    {/* Bottom CTA */}
+                    <div className="text-center mt-16">
+                        <p className="text-gray-300 mb-6 text-lg">
+                            İhtiyacınız olan hukuki desteği bulamadınız mı?
+                        </p>
+                        <Link 
+                            to="/contact" 
+                            className="inline-flex items-center gap-3 px-8 py-4 bg-[#D4AF37] text-black font-semibold rounded-sm hover:bg-[#F4D03F] transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                        >
+                            <span>Bizimle İletişime Geçin</span>
+                            <ArrowRight size={20} />
+                        </Link>
                     </div>
                 </div>
             </section>
-        );
-    }
-
-    return (
-        <section className="practice-areas-section text-white py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-            {/* Linear Bokeh Background Effect - REDUCED */}
-            <div className="practice-areas-bokeh">
-                <div className="practice-areas-bokeh-light"></div>
-                <div className="practice-areas-bokeh-light"></div>
-                <div className="practice-areas-bokeh-light"></div>
-                <div className="practice-areas-bokeh-light"></div>
-            </div>
-
-            {/* Linear Gradient Overlay */}
-            <div className="practice-areas-gradient"></div>
-                
-            {/* Content with higher z-index */}
-            <div className="relative z-10">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        
-                        {/* Left Side - Text Content - UNTOUCHED */}
-                        <div className="space-y-8">
-                            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white">
-                                Çalışma Alanlarımız
-                            </h2>
-                            
-                            <p className="text-lg text-gray-300 leading-relaxed">
-                                Çeşitli ve adil bir kültürü ilerletmeye, hukukun üstünlüğünü desteklemeye, 
-                                adalete erişimi artırmaya ve toplumun en savunmasız kesimlerinin 
-                                müvekkilerimiz, toplum ortaklarımız ve hukuk sektörü meslektaşlarımızla 
-                                ortaklık halinde kritik yasal yardım almasını sağlamaya derinden bağlıyız.
-                            </p>
-                            
-                            
-                        </div>
-
-                        {/* Right Side - Law Fields Grid - 3x3 */}
-                        <div className="grid grid-cols-3 gap-4">
-                            {practiceAreasData.map((area, index) => (
-                                <div
-                                    key={area.id}
-                                    onClick={() => handleAreaClick(area)}
-                                    className="aspect-square cursor-pointer group relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 bg-gradient-to-br from-gray-800 to-gray-900"
-                                >
-                                    <img
-                                        src={area.image}
-                                        alt={area.title}
-                                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 opacity-60"
-                                    />
-                                    
-                                    {/* Always visible overlay with title */}
-                                    <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-4 text-center">
-                                        <h3 className="text-white text-sm font-bold leading-tight">{area.title}</h3>
-                                    </div>
-                                    
-                                    {/* Hover overlay with description */}
-                                    <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-4 text-center">
-                                        <h3 className="text-white text-sm font-bold mb-2">{area.title}</h3>
-                                        <p className="text-gray-300 text-xs leading-tight">{area.description}</p>
-                                        <div className="mt-3">
-                                            <span className="inline-block px-3 py-1 bg-blue-600 text-white text-xs rounded-full">
-                                                Detaylar →
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
     );
 };
 
-export default PracticeAreas
+export default PracticeAreas;

@@ -1,6 +1,7 @@
 ﻿/* eslint-disable react-refresh/only-export-components */
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Scale, Phone, Mail, Facebook, Twitter, Instagram } from 'lucide-react';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,20 +39,21 @@ const Navbar = () => {
     const menuItems = useMemo(() => [
         { name: "Ana Sayfa", href: "/", hasDropdown: false },
         { name: "Kurumsal", href: "#about", hasDropdown: true, dropdownType: "kurumsal" },
+        { name: "Çalışma Alanları", href: "#practice-areas" },
         { name: "Makaleler", href: "#articles" },
         { name: "Ödeme", href: "#payment", hasDropdown: true, dropdownType: "payment" },
         { name: "İletişim", href: "#contact" }
     ], []);
 
     const kurumsalItems = [
-        { name: "Hukuk Büromuz", href: "/hukuk-buromuz", description: "" },
-        { name: "Avukatlarımız", href: "/avukatlarimiz", description: "" }
+        { name: "Hukuk Büromuz", href: "/hukuk-buromuz", description: "Firmamız Hakkında" },
+        { name: "Avukatlarımız", href: "/avukatlarimiz", description: "Uzman Kadromuz" }
     ];
 
     const paymentItems = [
-        { name: "Online Ödeme", href: "#" },
-        { name: "Hesap Numaraları", href: "#" },
-        { name: "Ödeme Bildirim Formu", href: "#" }
+        { name: "Online Ödeme", href: "#online-payment", description: "Güvenli Ödeme" },
+        { name: "Hesap Numaraları", href: "#accounts", description: "Banka Bilgileri" },
+        { name: "Ödeme Bildirim Formu", href: "#payment-form", description: "Bildirim" }
     ];
 
     const toggleMenu = useCallback(() => {
@@ -82,7 +84,6 @@ const Navbar = () => {
         closeMenu();
     }, [navigate, closeMenu]);
 
-    // Body scroll lock for mobile menu
     useEffect(() => {
         if (isMenuOpen) {
             document.body.style.overflow = 'hidden';
@@ -103,7 +104,6 @@ const Navbar = () => {
         };
     }, [isMenuOpen, closeMenu]);
 
-    // Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = () => {
             setIsKurumsalOpen(false);
@@ -146,168 +146,66 @@ const Navbar = () => {
     };
 
     return (
-        <nav 
-            className={`fixed top-0 left-0 w-full z-[1000] transition-all duration-300 ${
-                isScrolled 
-                    ? 'h-16 bg-white shadow-sm' 
-                    : 'h-20 bg-white'
-            }`}
-        >
-            <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full">
-                <div className="flex items-center justify-between h-full">
-                    {/* Logo - Left Side */}
-                    <Link 
-                        to="/" 
-                        className="flex items-center space-x-3 z-10" 
-                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    >
-                        <div className="flex items-center">
-                            <div className="bg-[#0B0C10] text-white font-extrabold text-2xl px-4 py-2 rounded-md">
-                                ÇE
-                            </div>
-                            <div className="ml-3 text-[#0B0C10] font-bold text-lg leading-tight tracking-wide">
-                                ÇAVDAR & ERSÖZ
-                            </div>
-                        </div>
-                    </Link>
-
-                    {/* Desktop Menu - Center */}
-                    <div className="hidden lg:flex items-center space-x-2">
-                        <ul className="flex items-center space-x-2">
-                            {menuItems.map((item, index) => (
-                                <li key={index} className="relative">
-                                    {item.hasDropdown ? (
-                                        <div className="relative group">
-                                            <button
-                                                onMouseEnter={() => setDropdownOpen(item.dropdownType, true)}
-                                                onMouseLeave={() => setDropdownOpen(item.dropdownType, false)}
-                                                onClick={(e) => e.stopPropagation()}
-                                                className="navbar-link px-4 py-2 text-gray-800 hover:text-gray-900 transition-all duration-200 flex items-center space-x-1"
-                                            >
-                                                <span>{item.name}</span>
-                                                <svg 
-                                                    className={`h-4 w-4 transition-transform duration-200 ${
-                                                        isDropdownOpen(item.dropdownType) ? 'rotate-180' : ''
-                                                    }`} 
-                                                    fill="none" 
-                                                    viewBox="0 0 24 24" 
-                                                    stroke="currentColor"
-                                                >
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                </svg>
-                                            </button>
-                                            
-                                            {/* Dropdown Menu */}
-                                            <div 
-                                                className={`kurumsal-dropdown absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 rounded-xl transition-all duration-200 ${
-                                                    isDropdownOpen(item.dropdownType)
-                                                    ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
-                                                }`}
-                                                onMouseEnter={() => setDropdownOpen(item.dropdownType, true)}
-                                                onMouseLeave={() => setDropdownOpen(item.dropdownType, false)}
-                                            >
-                                                <div className="py-2">
-                                                    {getDropdownItems(item.dropdownType).map((subItem, subIndex) => (
-                                                        <Link
-                                                            key={subIndex}
-                                                            to={subItem.href}
-                                                            className="block px-4 py-3 text-sm transition-colors duration-200 first:rounded-t-xl last:rounded-b-xl"
-                                                            onClick={closeMenu}
-                                                        >
-                                                            {subItem.name}
-                                                        </Link>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        item.href === '/' ? (
-                                            <Link
-                                                to={item.href}
-                                                className="navbar-link px-4 py-2 text-gray-800 hover:text-gray-900 transition-all duration-200 block"
-                                                onClick={() => handleNavClick(item.href)}
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        ) : (
-                                            <a 
-                                                href={item.href}
-                                                className="navbar-link px-4 py-2 text-gray-800 hover:text-gray-900 transition-all duration-200 block"
-                                                onClick={closeMenu}
-                                            >
-                                                {item.name}
-                                            </a>
-                                        )
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Contact Button - Right Side (Desktop Only) */}
-                    <div className="hidden lg:block">
-                        <a 
-                            href="#contact"
-                            className="px-6 py-2.5 bg-[#0B0C10] text-white text-sm font-semibold rounded-full hover:bg-gray-900 transition-all duration-200"
-                        >
-                            İletişim
+        <>
+            {/* Top Bar with Social Media and Info */}
+            <div className="top-bar">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center">
+                    <div className="flex items-center space-x-4">
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="top-bar-social">
+                            <Facebook size={14} />
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="top-bar-social">
+                            <Twitter size={14} />
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="top-bar-social">
+                            <Instagram size={14} />
                         </a>
                     </div>
-
-                    {/* Mobile Menu Button */}
-                    <div className="lg:hidden">
-                        <button
-                            onClick={toggleMenu}
-                            className="text-gray-800 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg p-2"
-                            aria-label={isMenuOpen ? "Close mobile menu" : "Open mobile menu"}
-                            aria-expanded={isMenuOpen}
-                            aria-controls="mobile-menu"
-                        >
-                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                {isMenuOpen ? (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                ) : (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
-                                )}
-                            </svg>
-                        </button>
+                    <div className="flex items-center space-x-6 text-xs">
+                        <a href="#privacy" className="top-bar-link">Gizlilik Politikası</a>
+                        <a href="#request" className="top-bar-link">Talep Formu</a>
+                        <a href="#faq" className="top-bar-link">SSS</a>
                     </div>
                 </div>
+            </div>
 
-                {/* Mobile Menu */}
-                <div 
-                    id="mobile-menu"
-                    className={`lg:hidden absolute top-full left-0 right-0 transition-all duration-300 ${
-                        isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-                    }`}         
-                    style={{
-                        background: 'white',
-                        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-                        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)'
-                    }}
-                    aria-hidden={!isMenuOpen}
-                >
-                    <div className="px-6 py-8 space-y-2">
-                        <nav aria-label="Mobile navigation">
-                            <ul className="space-y-2 text-gray-800" role="list">
+            {/* Main Navbar */}
+            <nav 
+                className={`main-navbar ${isScrolled ? 'navbar-scrolled' : ''}`}
+            >
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full">
+                    <div className="flex items-center justify-between h-full">
+                        {/* Logo */}
+                        <Link 
+                            to="/" 
+                            className="navbar-logo-container" 
+                            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        >
+                            <div className="navbar-logo-icon">
+                                <Scale size={28} className="text-[#C8A882]" />
+                            </div>
+                            <div className="navbar-logo-text">
+                                <span className="navbar-logo-title">ÇAVDAR & ERSÖZ</span>
+                                <span className="navbar-logo-subtitle">HUKUK & DANIŞMANLIK</span>
+                            </div>
+                        </Link>
+
+                        {/* Desktop Menu */}
+                        <div className="hidden lg:flex items-center space-x-1">
+                            <ul className="flex items-center space-x-1">
                                 {menuItems.map((item, index) => (
-                                    <li key={index} role="listitem">
+                                    <li key={index} className="relative">
                                         {item.hasDropdown ? (
-                                            <div>
+                                            <div className="relative group">
                                                 <button
-                                                    onClick={() => {
-                                                        if (item.dropdownType === 'kurumsal') {
-                                                            toggleKurumsal();
-                                                        } else if (item.dropdownType === 'payment') {
-                                                            togglePayment();
-                                                        }
-                                                    }}
-                                                    className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-xl transition-colors duration-200 flex items-center justify-between text-sm font-medium"
-                                                    tabIndex={isMenuOpen ? 0 : -1}
+                                                    onMouseEnter={() => setDropdownOpen(item.dropdownType, true)}
+                                                    onMouseLeave={() => setDropdownOpen(item.dropdownType, false)}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="navbar-menu-link"
                                                 >
-                                                    {item.name}
+                                                    <span>{item.name}</span>
                                                     <svg 
-                                                        className={`h-5 w-5 transition-transform duration-200 ${
+                                                        className={`h-4 w-4 transition-transform duration-200 ${
                                                             isDropdownOpen(item.dropdownType) ? 'rotate-180' : ''
                                                         }`} 
                                                         fill="none" 
@@ -318,16 +216,119 @@ const Navbar = () => {
                                                     </svg>
                                                 </button>
                                                 
-                                                {/* Mobile Dropdown */}
+                                                <div 
+                                                    className={`navbar-dropdown ${
+                                                        isDropdownOpen(item.dropdownType) ? 'navbar-dropdown-open' : ''
+                                                    }`}
+                                                    onMouseEnter={() => setDropdownOpen(item.dropdownType, true)}
+                                                    onMouseLeave={() => setDropdownOpen(item.dropdownType, false)}
+                                                >
+                                                    {getDropdownItems(item.dropdownType).map((subItem, subIndex) => (
+                                                        <Link
+                                                            key={subIndex}
+                                                            to={subItem.href}
+                                                            className="navbar-dropdown-item"
+                                                            onClick={closeMenu}
+                                                        >
+                                                            <div className="font-semibold">{subItem.name}</div>
+                                                            {subItem.description && (
+                                                                <div className="text-xs text-gray-400 mt-0.5">{subItem.description}</div>
+                                                            )}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            item.href === '/' ? (
+                                                <Link
+                                                    to={item.href}
+                                                    className="navbar-menu-link"
+                                                    onClick={() => handleNavClick(item.href)}
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            ) : (
+                                                <a 
+                                                    href={item.href}
+                                                    className="navbar-menu-link"
+                                                    onClick={closeMenu}
+                                                >
+                                                    {item.name}
+                                                </a>
+                                            )
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Contact Info */}
+                        <div className="hidden lg:flex items-center space-x-4">
+                            <div className="text-right">
+                                <div className="text-xs text-gray-400">Yardıma mı ihtiyacınız var?</div>
+                                <a href="tel:+905551234567" className="navbar-phone">
+                                    <Phone size={16} />
+                                    <span>+90 555 123 45 67</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Mobile Menu Button */}
+                        <div className="lg:hidden">
+                            <button
+                                onClick={toggleMenu}
+                                className="mobile-menu-btn"
+                                aria-label={isMenuOpen ? "Close mobile menu" : "Open mobile menu"}
+                            >
+                                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    {isMenuOpen ? (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    ) : (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+                                    )}
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                        {/* Mobile Menu */}
+                    <div 
+                        className={`mobile-menu ${isMenuOpen ? 'mobile-menu-open' : ''}`}
+                    >
+                        <div className="px-6 py-8 space-y-2">
+                            <ul className="space-y-2">
+                                {menuItems.map((item, index) => (
+                                    <li key={index}>
+                                        {item.hasDropdown ? (
+                                            <div>
+                                                <button
+                                                    onClick={() => {
+                                                        if (item.dropdownType === 'kurumsal') toggleKurumsal();
+                                                        else if (item.dropdownType === 'payment') togglePayment();
+                                                    }}
+                                                    className="mobile-menu-item"
+                                                >
+                                                    {item.name}
+                                                    <svg 
+                                                        className={`h-5 w-5 transition-transform ${
+                                                            isDropdownOpen(item.dropdownType) ? 'rotate-180' : ''
+                                                        }`} 
+                                                        fill="none" 
+                                                        viewBox="0 0 24 24" 
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+                                                
                                                 {isDropdownOpen(item.dropdownType) && (
-                                                    <div className="mt-2 ml-4 space-y-1">
+                                                    <div className="mt-2 ml-4 space-y-1 border-l-2 border-[#C8A882] pl-4">
                                                         {getDropdownItems(item.dropdownType).map((subItem, subIndex) => (
                                                             <Link
                                                                 key={subIndex}
                                                                 to={subItem.href}
-                                                                className="block px-4 py-2.5 text-sm hover:bg-gray-50 rounded-lg transition-colors duration-200"
+                                                                className="block px-4 py-2.5 text-sm hover:bg-gray-800 rounded-lg"
                                                                 onClick={closeMenu}
-                                                                tabIndex={isMenuOpen ? 0 : -1}
                                                             >
                                                                 {subItem.name}
                                                             </Link>
@@ -339,18 +340,16 @@ const Navbar = () => {
                                             item.href === '/' ? (
                                                 <Link
                                                     to={item.href}
-                                                    className="block px-4 py-3 hover:bg-gray-50 rounded-xl transition-colors duration-200 text-sm font-medium"
+                                                    className="mobile-menu-item"
                                                     onClick={() => handleNavClick(item.href)}
-                                                    tabIndex={isMenuOpen ? 0 : -1}
                                                 >
                                                     {item.name}
                                                 </Link>
                                             ) : (
                                                 <a
                                                     href={item.href}
-                                                    className="block px-4 py-3 hover:bg-gray-50 rounded-xl transition-colors duration-200 text-sm font-medium"
+                                                    className="mobile-menu-item"
                                                     onClick={closeMenu}
-                                                    tabIndex={isMenuOpen ? 0 : -1}
                                                 >
                                                     {item.name}
                                                 </a>
@@ -359,22 +358,11 @@ const Navbar = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </nav>
-                        
-                        {/* Mobile Contact Button */}
-                        <div className="pt-6">
-                            <a 
-                                href="#contact"
-                                className="block w-full text-center px-6 py-3 bg-[#0B0C10] text-white text-sm font-semibold rounded-xl hover:bg-gray-900 transition-all duration-200"
-                                onClick={closeMenu}
-                            >
-                                İletişim
-                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </>
     );
 };
 

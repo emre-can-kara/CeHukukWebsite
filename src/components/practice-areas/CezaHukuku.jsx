@@ -28,7 +28,7 @@
                     >
                         <div className="prose prose-invert max-w-none">
                             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                                İçerik yakında eklenecektir.
+                                Asliye ceza mahkemeleri ve ağır ceza mahkemelerinde suç tipine göre uzman avukatımız olayın özellikleri de dikkate alınarak tarafından hukuku destek sağlanmaktadır. Ceza davalarında Bursa ceza avukatı olarak müvekkillerimize hukuk hizmeti sunuyoruz.
                             </p>
                         </div>
                     </div>

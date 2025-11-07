@@ -1,4 +1,7 @@
-﻿const KVKKDanismanligi = () => {
+﻿import { Shield, CheckCircle, FileText, Users, Lock, Database, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const KVKKDanismanligi = () => {
     return (
         <div className="min-h-screen bg-[#0B0C10] pt-24 pb-16">
             {/* Bokeh Lights Background */}
@@ -28,7 +31,7 @@
                     >
                         <div className="prose prose-invert max-w-none">
                             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                                İçerik yakında eklenecektir.
+                                Ofisin kurucu avukatları Kişisel Verilerin Korunması Hukuku kapsamında yetkili kuruluşlardan eğitim almış ve eğitim sonunda aldıkları sertifikalara dayanarak KVKK danışmanlığı hizmeti vermektedirler.
                             </p>
                         </div>
                     </div>

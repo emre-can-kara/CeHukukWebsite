@@ -28,7 +28,9 @@
                     >
                         <div className="prose prose-invert max-w-none">
                             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                                İçerik yakında eklenecektir.
+                                Sürekli danışmanlık hizmetleri müvekkillerimizin ihtiyaçları ve mevcut durum şartlarına göre şekillendirilebilmektedir. Koruyucu ve önleyici hukuk danışmanlığı çerçevesinde şirket organizasyonu, insan kaynakları süreçlerinin takibi, sözleşmelerin hazırlanması, fesih aşamasında hukuki yardım gibi konularda sürekli, etkin, güvenilir ve ulaşılabilir danışmanlık anlayışı ile müvekkillere hizmet verilmektedir.
+
+                                İşveren müvekkiller nezdinde büromuzun en temel amacı, hukuki ihtilaf meydana gelmeden önleyici hizmet vermektir. Bu bağlamda verilen hukuki danışmanlık hizmeti, zarar meydana gelmeden tespit ve analiz yaparak riskleri en aza indirmek etrafında toplanmaktadır. Hukuki süreçler kanunlar çerçevesinde takip edilerek müvekkillerin hak ve menfaatlerinin korunması sağlanmaktadır. Açılan veya açılacak davalarda hukuki yardım, sözleşmelerin hazırlanması ve düzenlenmesi noktasında toplanmaktadır.
                             </p>
                         </div>
                     </div>

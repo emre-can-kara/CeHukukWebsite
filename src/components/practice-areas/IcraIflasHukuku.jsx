@@ -28,7 +28,7 @@
                     >
                         <div className="prose prose-invert max-w-none">
                             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                                İçerik yakında eklenecektir.
+                                Gerek ilamların icrası gerek senet, çek gibi kambiyo evraklarının icrası ve icra takibi hukuk büromuz tarafından yapılmaktadır. Şahıs ve şirketlere, alacağın kanunlar çerçevesinde tahsili ve ödenmesi ile ilgili olarak hizmet vermektedir. Hukuk büromuz yapılan icra takiplerinin başından sonuna kadar her aşamasında aktif olarak rol alarak, alacağın tahsilini en kısa zamanda sağlamak amacı ile gereken adımları atar.
                             </p>
                         </div>
                     </div>
